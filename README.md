@@ -1,36 +1,210 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nordhem
 
-## Getting Started
+> **Italiano** · [Svenska](#svenska) · [English](#english)
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Italiano
+
+**Nordhem** è un progetto Next.js 16 + Tailwind CSS v4 che replica il sito di un'agenzia immobiliare scandinava di fascia alta. L'interfaccia è un porting fedele di un prototipo React standalone, con supporto multilingua integrato.
+
+### Caratteristiche
+
+- **Tre lingue**: Italiano, Svedese, Inglese — toggle nella navbar
+- **Design system completo**: palette, tipografia (Instrument Serif, JetBrains Mono, Space Grotesk), animazioni
+- **Sezioni**: Hero con ricerca, Marquee città scorrevole, Griglia proprietà asimmetrica con filtri, Detail drawer, Filosofia, Testimonial carosello, Lead capture form, Footer
+- **Next.js 16** con App Router e Turbopack
+- **Tailwind CSS v4** con PostCSS
+- **TypeScript** — tipizzato end-to-end
+
+### Struttura
+
+```
+src/
+├── app/
+│   ├── globals.css        # CSS puro, nessun componente Tailwind
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Pagina principale
+├── components/
+│   ├── lang-context.tsx   # Provider multilingua (IT/SV/EN)
+│   ├── language-toggle.tsx
+│   ├── icons.tsx          # Sistema icone SVG inline
+│   ├── nav.tsx
+│   ├── hero.tsx
+│   ├── marquee.tsx
+│   ├── listing-card.tsx
+│   ├── listinsg-section.tsx
+│   ├── drawer.tsx
+│   ├── philosophy.tsx
+│   ├── testimonials.tsx
+│   ├── lead-capture.tsx
+│   └── footer.tsx
+└── data/
+    ├── translations.ts    # ~250 chiavi tradotte
+    ├── listinsg.ts        # 6 proprietà + dati
+    └── regions.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installazione
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Apri [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+### Build
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Strumento       | Versione |
+|----------------|----------|
+| Next.js        | 16.2.6   |
+| React          | 19.2.4   |
+| Tailwind CSS   | 4.x      |
+| TypeScript     | 5.x      |
+| Font Google    | Instrument Serif, JetBrains Mono, Space Grotesk |
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Svenska
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Nordhem** är ett Next.js 16 + Tailwind CSS v4-projekt som återskapar en exklusiv skandinavisk fastighetsmäklarwebbplats. Gränssnittet är en trogen överföring från en fristående React-prototyp med inbyggt flerspråksstöd.
+
+### Funktioner
+
+- **Tre språk**: Svenska, Italienska, Engelska — växla i navigeringsfältet
+- **Komplett designsystem**: palett, typografi (Instrument Serif, JetBrains Mono, Space Grotesk), animationer
+- **Sektioner**: Hero med sökning, rullande stadsmarquee, asymmetriskt egendomsrutnät med filter, detaljpanel, filosofi, testimonialkarusell, leadformulär, sidfot
+- **Next.js 16** med App Router och Turbopack
+- **Tailwind CSS v4** med PostCSS
+- **TypeScript** — fullständigt typat
+
+### Struktur
+
+```
+src/
+├── app/
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── lang-context.tsx
+│   ├── language-toggle.tsx
+│   ├── icons.tsx
+│   ├── nav.tsx
+│   ├── hero.tsx
+│   ├── marquee.tsx
+│   ├── listing-card.tsx
+│   ├── listinsg-section.tsx
+│   ├── drawer.tsx
+│   ├── philosophy.tsx
+│   ├── testimonials.tsx
+│   ├── lead-capture.tsx
+│   └── footer.tsx
+└── data/
+    ├── translations.ts
+    ├── listinsg.ts
+    └── regions.ts
+```
+
+### Installation
+
+```bash
+npm install
+npm run dev
+```
+
+Öppna [http://localhost:3000](http://localhost:3000).
+
+### Bygg
+
+```bash
+npm run build
+npm start
+```
+
+### Teknikstack
+
+| Verktyg         | Version |
+|----------------|---------|
+| Next.js        | 16.2.6  |
+| React          | 19.2.4  |
+| Tailwind CSS   | 4.x     |
+| TypeScript     | 5.x     |
+| Google Fonts   | Instrument Serif, JetBrains Mono, Space Grotesk |
+
+---
+
+## English
+
+**Nordhem** is a Next.js 16 + Tailwind CSS v4 project that replicates an upscale Scandinavian real estate agency website. The interface is a faithful port of a standalone React prototype with built-in multilingual support.
+
+### Features
+
+- **Three languages**: English, Swedish, Italian — switch via navbar toggle
+- **Complete design system**: palette, typography (Instrument Serif, JetBrains Mono, Space Grotesk), animations
+- **Sections**: Hero with search, scrolling city marquee, asymmetric property grid with filters, detail drawer, philosophy, testimonial carousel, lead capture form, footer
+- **Next.js 16** with App Router and Turbopack
+- **Tailwind CSS v4** with PostCSS
+- **TypeScript** — end-to-end typed
+
+### Structure
+
+```
+src/
+├── app/
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── lang-context.tsx
+│   ├── language-toggle.tsx
+│   ├── icons.tsx
+│   ├── nav.tsx
+│   ├── hero.tsx
+│   ├── marquee.tsx
+│   ├── listing-card.tsx
+│   ├── listinsg-section.tsx
+│   ├── drawer.tsx
+│   ├── philosophy.tsx
+│   ├── testimonials.tsx
+│   ├── lead-capture.tsx
+│   └── footer.tsx
+└── data/
+    ├── translations.ts
+    ├── listinsg.ts
+    └── regions.ts
+```
+
+### Setup
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+### Build
+
+```bash
+npm run build
+npm start
+```
+
+### Tech Stack
+
+| Tool            | Version |
+|----------------|---------|
+| Next.js        | 16.2.6  |
+| React          | 19.2.4  |
+| Tailwind CSS   | 4.x     |
+| TypeScript     | 5.x     |
+| Google Fonts   | Instrument Serif, JetBrains Mono, Space Grotesk |
