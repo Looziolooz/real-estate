@@ -1,16 +1,25 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useLang } from "@/components/lang-context";
-import { LISTINGS } from "@/data/listings";
+import { LISTINGS, type Listing } from "@/data/listings";
 import { REGIONS, TYPES } from "@/data/regions";
 import ListingCard from "@/components/listing-card";
 import { Icon } from "@/components/icons";
+import { useReveal } from "@/lib/use-reveal";
 
 const spanPattern = ["span-7", "span-5", "span-5", "span-7", "span-8", "span-4"];
 
-export default function Listings({ onOpen }: { onOpen: (l: any) => void }) {
+export default function Listings({
+  openId,
+  onOpen,
+}: {
+  /** Which listing currently owns the drawer, so its card yields the flip id. */
+  openId: string | null;
+  onOpen: (l: Listing) => void;
+}) {
   const { t } = useLang();
+  const sectionRef = useRef<HTMLElement>(null);
   const [region, setRegion] = useState("alla");
   const [type, setType] = useState("alla");
   const [sort, setSort] = useState("featured");
@@ -36,8 +45,10 @@ export default function Listings({ onOpen }: { onOpen: (l: any) => void }) {
     });
   };
 
+  useReveal(sectionRef);
+
   return (
-    <section id="bostader">
+    <section id="bostader" ref={sectionRef}>
       <div className="wrap">
         <div className="section-head">
           <div className="section-head-left">
@@ -73,7 +84,12 @@ export default function Listings({ onOpen }: { onOpen: (l: any) => void }) {
               className={`chip ${region === r.id ? "active" : ""}`}
               onClick={() => setRegion(r.id)}
             >
-              {r.labelKey}
+              {/* Through t(), not raw. `labelKey` holds a literal for the named
+                  regions but a real translation key for "all" — which was
+                  printing as `listings.filter.all` on the chip. t() returns the
+                  key unchanged when there is no entry, so the literals pass
+                  through untouched. */}
+              {t(r.labelKey)}
             </button>
           ))}
           <span className="filter-divider"></span>
@@ -84,7 +100,7 @@ export default function Listings({ onOpen }: { onOpen: (l: any) => void }) {
               className={`chip ${type === tOption.id ? "active" : ""}`}
               onClick={() => setType(tOption.id)}
             >
-              {tOption.labelKey}
+              {t(tOption.labelKey)}
             </button>
           ))}
           <span className="filter-divider"></span>
@@ -131,6 +147,7 @@ export default function Listings({ onOpen }: { onOpen: (l: any) => void }) {
                   span={span}
                   tall={tall}
                   liked={liked.has(l.id)}
+                  morphing={openId === l.id}
                   onLike={() => toggleLike(l.id)}
                   onOpen={() => onOpen(l)}
                 />

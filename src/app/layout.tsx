@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Nordhem — Bostäder med själ",
+  title: "Meridia — a catalogue of nine houses",
   description:
-    "Vi förmedlar utvalda bostäder i Skandinavien — med omsorg för proportioner, ljus, och tystnaden mellan rummen.",
+    "Nine houses in warm places, chosen over four years and plotted with the measurements you cannot take from a dark country.",
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="sv" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className="antialiased">{children}</body>
     </html>
   );

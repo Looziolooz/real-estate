@@ -7,9 +7,12 @@ import type { Listing } from "@/data/listings";
 
 export default function Drawer({
   listing,
+  morphing,
   onClose,
 }: {
   listing: Listing | null;
+  /** True while the card image is in flight to or from this panel. */
+  morphing: boolean;
   onClose: () => void;
 }) {
   const { t } = useLang();
@@ -28,20 +31,32 @@ export default function Drawer({
         className={`drawer-backdrop ${listing ? "open" : ""}`}
         onClick={onClose}
       />
-      <aside className={`drawer ${listing ? "open" : ""}`}>
+      {/* `.morphing` drops the slide transform and the scroll clip for the
+          duration of the flight. The transform would put the panel off-screen
+          while Flip measured where the image should land, and `overflow-y:auto`
+          would shear the image off at the panel edge on the way in. Once the
+          morph lands the class comes off, restoring the scroll — and since
+          `.drawer.open` is `translateX(0)`, dropping `transform:none` is
+          visually identical, so nothing jumps. */}
+      <aside
+        className={`drawer ${listing ? "open" : ""} ${morphing ? "morphing" : ""}`}
+      >
         {listing && (
           <>
             <button
               className="drawer-close"
               onClick={onClose}
               aria-label="Stäng"
+              data-drawer-chrome
             >
               <Icon name="close" size={16} />
             </button>
             <div className="drawer-img">
-              <img src={listing.img} alt={listing.title} />
+              <div className="flip-frame" data-flip-id={listing.id}>
+                <img src={listing.img} alt={listing.title} />
+              </div>
             </div>
-            <div className="drawer-body">
+            <div className="drawer-body" data-drawer-chrome>
               <div className="eyebrow" style={{ marginBottom: 14 }}>
                 {listing.location}
               </div>

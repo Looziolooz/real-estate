@@ -1,30 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Archivo:wght@400;500;600&display=swap');
 
 @import "tailwindcss";
 
 :root {
-  --bg: #EAE3D2;
-  --bg-paper: #DDD3BD;
-  --bg-card: #F2EBD8;
-  --bg-deep: #1B1814;
-  --ink: #15110D;
-  --ink-2: #3B2F26;
-  --muted: #8A7E6B;
-  --line: #C8BBA0;
-  --line-2: #A89674;
-  --accent: #5A6A7A;
-  --accent-2: #B8865A;
-  --gold: #B7935A;
-  --offwhite: #F5EFDF;
+  /* ---------------------------------------------------------------------
+     MERIDIA — engraved celestial atlas.
 
-  --font-display: 'Instrument Serif', 'Times New Roman', Georgia, serif;
-  --font-sans: 'Space Grotesk', -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+     The ground is prussian chart ink, not "dark mode grey" and not the cream
+     that every generated interface lands on. The signal is vermilion, the ink
+     a chart correction is made in — deliberately not the gold that every
+     luxury property site reaches for. Text is chalk: warm, but never the page.
+
+     Token NAMES are inherited from the previous identity and kept so the ~2000
+     lines of rules below need no edit. Their VALUES are inverted: `--ink` is
+     now the light on a dark plate, `--bg` the plate itself.
+     --------------------------------------------------------------------- */
+  --bg: #0C1A2B;           /* the plate */
+  --bg-paper: #0F2135;     /* a shade lifted, for raised surfaces */
+  --bg-card: #132840;      /* card ground */
+  --bg-deep: #07111D;      /* the darkest band */
+  --ink: #E7E2D6;          /* engraving chalk — the primary mark */
+  --ink-2: #C2CAD4;        /* secondary text */
+  --muted: #8B99A8;        /* labels, coordinates */
+  --line: #2A3E56;         /* ruled hairline */
+  --line-2: #3A5474;       /* stronger rule */
+  --accent: #C8452F;       /* vermilion correction ink */
+  --accent-2: #6E93A8;     /* chart cyan, for quiet secondary marks */
+  --gold: #6E93A8;         /* retired: aliased away from gold on purpose */
+  --offwhite: #F2EEE4;
+
+  /* EB Garamond is the plate lettering of 17th-century celestial atlases —
+     the one reason a face this classical is justified here. Archivo carries
+     coordinates, magnitudes and labels, where tabular figures matter. */
+  --font-display: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Archivo', system-ui, -apple-system, sans-serif;
 
   --r-sm: 0px;
-  --r-md: 2px;
-  --r-lg: 4px;
-  --r-xl: 6px;
+  --r-md: 0px;
+  --r-lg: 0px;
+  --r-xl: 0px;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -111,29 +126,34 @@ a {
   line-height: 0;
 }
 
+/* Newsreader is wider than the face it replaces, so the old ceiling pushed the
+   hero headline onto a third line and shoved the stats below the fold. 96px is
+   both the size that holds it at two lines and the display ceiling the craft
+   floor sets — restraint and fit landing on the same number. The 40px floor
+   clears a 390px phone without the grid blowing out. */
 .h-display {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(72px, 13vw, 192px);
-  line-height: 0.88;
-  letter-spacing: -0.025em;
+  font-size: clamp(40px, 7vw, 96px);
+  line-height: 0.92;
+  letter-spacing: -0.022em;
   color: var(--ink);
 }
 
 .h1 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(48px, 7vw, 96px);
-  line-height: 0.98;
+  font-size: clamp(40px, 5.4vw, 76px);
+  line-height: 1.02;
   letter-spacing: -0.02em;
 }
 
 .h2 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(32px, 4vw, 56px);
-  line-height: 1.05;
-  letter-spacing: -0.015em;
+  font-size: clamp(30px, 3.6vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -0.016em;
 }
 
 .h3 {
@@ -293,9 +313,11 @@ a {
 
 .logo {
   font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 400;
-  letter-spacing: -0.015em;
+  font-size: 21px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.38em;
+  padding-left: 0.38em;
   display: flex;
   align-items: baseline;
   gap: 4px;
@@ -1649,4 +1671,879 @@ footer .logo .est {
 * {
   margin: 0;
   padding: 0;
+}
+
+/* ===========================================================================
+   MOTION LAYER
+   Ported from the ZENITH study. Everything below is additive: remove this
+   block and the site still lays out and reads exactly as before.
+   =========================================================================== */
+
+/* --- reveal primitives -----------------------------------------------------
+   `[data-anim]` elements start transparent, but only once <html> is marked
+   motion-ready — so if the JS never boots, the content is simply visible
+   rather than permanently invisible.
+   -------------------------------------------------------------------------- */
+
+[data-anim] {
+  will-change: transform, opacity;
+}
+
+html.motion-ready [data-anim='fade-up'],
+html.motion-ready [data-anim='mask-line'] > *,
+html.motion-ready [data-anim='reveal'] {
+  opacity: 0;
+}
+
+/* A line of type that wipes up from behind a mask. */
+[data-anim='mask-line'] {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+[data-anim='mask-line'] > * {
+  display: block;
+}
+
+/* --- grain ----------------------------------------------------------------- */
+
+.nh-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  pointer-events: none;
+  overflow: hidden;
+  mix-blend-mode: multiply;
+  opacity: 0.14;
+}
+
+.nh-grain::after {
+  content: '';
+  position: absolute;
+  /* Just enough bleed to cover the 2% shift below. This plate composites over
+     the whole viewport every frame, so the overdraw is not free. */
+  inset: -8%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: nh-grain-shift 0.7s steps(3) infinite;
+}
+
+@keyframes nh-grain-shift {
+  0% { transform: translate3d(0, 0, 0); }
+  33% { transform: translate3d(-2%, 1%, 0); }
+  66% { transform: translate3d(1%, -2%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+/* --- Lenis ----------------------------------------------------------------- */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* --- morph ----------------------------------------------------------------- */
+
+/* The card image is the element that flies into the drawer. z-index is inert
+   while it is statically positioned, and takes effect exactly when Flip
+   switches it to absolute mid-flight — the one moment it has to outrank its
+   siblings. The listing must not clip it, or the flight is sheared off at the
+   card's own edge. */
+.listing-img {
+  overflow: visible;
+}
+
+.listing-img > .flip-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 70;
+}
+
+/* --- reduced motion --------------------------------------------------------
+   A hard gate, not a dimmer. Nothing above is load-bearing for content.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html.motion-ready [data-anim='fade-up'],
+  html.motion-ready [data-anim='mask-line'] > *,
+  html.motion-ready [data-anim='reveal'] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .nh-grain::after {
+    animation: none !important;
+  }
+
+  .fade-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Drawer, during a morph. See the comment in drawer.tsx for why both of these
+   have to come off while the image is in flight. */
+.drawer.morphing {
+  transform: none;
+  transition: none;
+  overflow: visible;
+}
+
+.drawer-img {
+  position: relative;
+}
+
+.drawer-img > .flip-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.drawer-img > .flip-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.listing-img > .flip-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===========================================================================
+   RHYTHM
+   The ZENITH study's restraint, applied to the existing layout rather than
+   replacing it. Two changes only: more air between sections, and a slower
+   hand on hover transitions. Everything structural stays as designed.
+   =========================================================================== */
+
+section {
+  padding: 136px 0;
+}
+
+@media (max-width: 720px) {
+  section {
+    padding: 92px 0;
+  }
+}
+
+.section-head {
+  margin-bottom: 76px;
+}
+
+/* Hover states ease rather than snap. 200ms reads as a UI responding; 420ms
+   reads as a material settling, which is the register the rest of the page
+   is in. */
+.listing-img img,
+.btn,
+.nav-links a,
+.filter-chip {
+  transition-duration: 420ms;
+}
+
+/* ===========================================================================
+   VIDEO
+   =========================================================================== */
+
+/* The hero's featured panel is a video now; it has to fill the frame exactly
+   as the still image did. */
+.hero-img-wrap video,
+.hero-img-wrap img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- full-bleed band ------------------------------------------------------- */
+
+.video-band {
+  padding: 0;
+  margin: 136px 0;
+}
+
+@media (max-width: 720px) {
+  .video-band {
+    margin: 92px 0;
+  }
+}
+
+.video-band-frame {
+  position: relative;
+  height: min(78vh, 720px);
+  overflow: hidden;
+  background: var(--bg-deep);
+  /* Matches the GSAP start value, so the band is already the right shape on
+     the first paint and does not pop when the scrub attaches. */
+  clip-path: inset(22% 0% 22% 0%);
+  will-change: clip-path;
+}
+
+/* Overscaled on purpose: the parallax below slides it, and at 100% the top and
+   bottom edges would swing into frame. */
+.video-band-media {
+  position: absolute;
+  inset: -12% 0;
+  will-change: transform;
+}
+
+.video-band-media video,
+.video-band-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-band-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(21, 17, 13, 0.42) 0%,
+    rgba(21, 17, 13, 0.18) 45%,
+    rgba(21, 17, 13, 0.55) 100%
+  );
+}
+
+.video-band-copy {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 24px;
+  color: var(--offwhite);
+}
+
+.video-band-copy .h1 {
+  color: var(--offwhite);
+  max-width: 16ch;
+}
+
+.video-band-cap {
+  margin-top: 28px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245, 239, 223, 0.62);
+}
+
+/* Reduced motion: the frame is simply open, and BgVideo has already swapped
+   itself for the poster. */
+@media (prefers-reduced-motion: reduce) {
+  .video-band-frame {
+    clip-path: none;
+  }
+  .video-band-media {
+    inset: 0;
+  }
+}
+
+/* The display clamp bottoms out at 72px, which is wider than a 390px phone can
+   hold: the h1 sits in a CSS grid, grid items default to min-width:auto, and so
+   the column refuses to shrink below the headline's min-content and pushes the
+   page into horizontal scroll. Both halves of that need fixing — a smaller
+   floor, and permission for the item to shrink. */
+@media (max-width: 720px) {
+  .h-display {
+    font-size: clamp(44px, 12.5vw, 72px);
+  }
+
+  .hero-grid > * {
+    min-width: 0;
+  }
+}
+
+/* ===========================================================================
+   NAV — MOBILE
+   The header was one row of eight items with no small-screen treatment: at
+   390px .nav-inner measured 439px and dragged the whole document into
+   horizontal scroll. Below 1024px the six links and the desktop actions come
+   out of the bar and into a full-screen panel, leaving the bar with two
+   items — logo and toggle — which fit. Nothing here applies at >=1024px.
+   =========================================================================== */
+
+/* Replaces the `flex items-center gap-4` utilities the actions group used to
+   carry, one-for-one, so the desktop bar is byte-identical in layout. */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -11px;
+  color: var(--ink);
+  transition: color 420ms var(--ease);
+}
+
+.nav-burger:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 1023px) {
+  .nav-links,
+  .nav-actions {
+    display: none;
+  }
+
+  .nav-burger {
+    display: inline-flex;
+  }
+}
+
+/* --- the panel ------------------------------------------------------------
+   Rendered as a sibling of <header>, not a child: .nav has a backdrop-filter,
+   which makes it the containing block for fixed descendants and would trap
+   this overlay inside the 82px bar.
+   -------------------------------------------------------------------------- */
+
+.nav-panel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  flex-direction: column;
+  background: var(--bg);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 320ms var(--ease),
+    visibility 0s linear 320ms;
+}
+
+@media (max-width: 1023px) {
+  .nav-panel {
+    display: flex;
+  }
+}
+
+.nav-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 320ms var(--ease),
+    visibility 0s linear 0s;
+}
+
+/* Repeats the bar's own metrics so the logo does not move a pixel when the
+   panel covers it. */
+.nav-panel-top {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 82px;
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-panel-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav-panel-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+  padding-top: 52px;
+  padding-bottom: 40px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.nav-panel-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav-panel-links a {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 8.4vw, 42px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  padding: 7px 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 380ms var(--ease),
+    transform 380ms var(--ease),
+    color 420ms var(--ease);
+}
+
+/* The stagger is the only motion in here: one settle, in reading order. */
+.nav-panel.is-open .nav-panel-links a {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(80ms + var(--i, 0) * 45ms);
+}
+
+.nav-panel-links a:hover {
+  color: var(--accent);
+}
+
+.nav-panel-links a.active {
+  color: var(--accent);
+  font-style: italic;
+}
+
+/* The same rotated square that marks the logo. */
+.nav-panel-links a.active::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 14px;
+  vertical-align: middle;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+.nav-panel-foot {
+  flex: 0 0 auto;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 380ms var(--ease),
+    transform 380ms var(--ease);
+}
+
+.nav-panel.is-open .nav-panel-foot {
+  opacity: 1;
+  transform: none;
+  transition-delay: 360ms;
+}
+
+.nav-panel-cta {
+  width: 100%;
+  justify-content: center;
+}
+
+/* The primary button's hover lifts by 2px and casts a hard shadow — on a
+   full-width block at the bottom of a phone screen that reads as a glitch,
+   and the shadow overhangs the viewport. */
+.nav-panel-cta:hover {
+  transform: none;
+  box-shadow: none;
+  background: var(--accent);
+}
+
+/* Reduced motion: the panel is simply there or not there. The global gate
+   above zeroes durations but not delays, which would otherwise leave the
+   links fading in on a stagger that never arrives. */
+@media (prefers-reduced-motion: reduce) {
+  .nav-panel,
+  .nav-panel.is-open,
+  .nav-panel .nav-panel-links a,
+  .nav-panel.is-open .nav-panel-links a,
+  .nav-panel .nav-panel-foot,
+  .nav-panel.is-open .nav-panel-foot {
+    transition: none !important;
+    transition-delay: 0s !important;
+    transform: none !important;
+  }
+
+  .nav-panel.is-open .nav-panel-links a,
+  .nav-panel.is-open .nav-panel-foot {
+    opacity: 1;
+  }
+}
+
+/* --- scope note ------------------------------------------------------------
+   Not the nav. With the header row fixed the document still measured 410px at
+   390px, and the remaining overflow is the hero's search bar: it is a grid,
+   grid items default to min-width:auto, and the <input> inside .search-value
+   carries an intrinsic size the column then refuses to shrink below. Two
+   columns of 234px + 146px = 382px against 350px of available width. Same
+   shape of bug, and same fix, as the .hero-grid rule above.
+   -------------------------------------------------------------------------- */
+@media (max-width: 760px) {
+  .search-bar > * {
+    min-width: 0;
+  }
+}
+
+/* The testimonial track bleeds to the page edge with `margin: 0 -40px` and an
+   equal padding, which cancels against `.wrap`'s 40px gutter. Below 720px that
+   gutter drops to 20px but the bleed stayed at 40px, so the track hung 20px
+   past the viewport and the whole page scrolled sideways. The bleed has to
+   track the gutter. */
+@media (max-width: 720px) {
+  .testi-track {
+    margin: 0 -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* ===========================================================================
+   TYPE ROLES
+   The label role used to be carried by a monospace, which did the spacing work
+   for free. A grotesque at the same tracking reads tight and loses its job as a
+   label, so the separation is rebuilt out of case, tracking and weight. Figures
+   get tabular forms wherever a column of numbers has to line up.
+   =========================================================================== */
+
+.eyebrow,
+.meta,
+.mono,
+.btn,
+.filter-label,
+.search-label,
+.nav .logo .dot + *,
+.section-num {
+  font-variant-numeric: tabular-nums;
+}
+
+.meta {
+  letter-spacing: 0.14em;
+  font-weight: 500;
+}
+
+.eyebrow {
+  letter-spacing: 0.16em;
+}
+
+.btn {
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+
+/* Prices, areas, years and ratings are data: they align in columns and are
+   compared against each other, so they keep tabular figures even though the
+   family around them is proportional. */
+.listing-price,
+.listing-specs,
+.hero-stats .h2,
+.spec-cell .val,
+.testi-name,
+.drawer .h1 + * {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The base clamp floor now clears small screens on its own, so the earlier
+   mobile override only has to keep the grid item shrinkable. */
+@media (max-width: 720px) {
+  .h-display {
+    font-size: clamp(40px, 11vw, 64px);
+  }
+}
+
+/* ===========================================================================
+   SHOWCASE — horizontal portfolio band
+   Desktop pins the section and translates the track on X. Touch and
+   reduced-motion get the same markup as an ordinary snap scroller: pinning on
+   a phone hijacks the only gesture the visitor has.
+   =========================================================================== */
+
+.showcase {
+  padding: 0;
+  margin: 136px 0;
+  overflow: hidden;
+}
+
+@media (max-width: 720px) {
+  .showcase {
+    margin: 92px 0;
+  }
+}
+
+.showcase-pin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  /* Explicit, because the track inside is several viewports wide and a flex
+     column otherwise grows to its widest child. The panel would then be ~4500px
+     across, and `.wrap` would centre the heading inside *that* — pushing it far
+     off the left margin. `.showcase` clips the overflow. */
+  width: 100%;
+  min-width: 0;
+}
+
+/* While pinned the panel IS the viewport, so it has to be exactly that tall and
+   clear the 82px sticky header — otherwise the heading is pinned underneath the
+   nav and reads as cut off. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .showcase-pin {
+    height: 100vh;
+    padding-top: 82px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+  }
+}
+
+/* `.wrap` carries `margin: 0 auto`. As a flex item that auto margin wins over
+   stretch, so the header shrank to its content and floated off the grid. An
+   explicit full width leaves the auto margins nothing to distribute. */
+.showcase-head {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.showcase-sub {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 42ch;
+}
+
+.showcase-track {
+  display: flex;
+  gap: 24px;
+  padding-left: 40px;
+  will-change: transform;
+}
+
+.showcase-frame {
+  margin: 0;
+  flex: 0 0 auto;
+  width: min(56vw, 780px);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--bg-paper);
+}
+
+.showcase-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Touch and reduced motion: no pin, no transform — a real scroller. The track
+   keeps a trailing gutter so the last frame can reach the left edge. */
+@media (max-width: 1023px), (prefers-reduced-motion: reduce) {
+  .showcase-pin {
+    height: auto !important;
+  }
+
+  .showcase-track {
+    transform: none !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-right: 40px;
+    scroll-padding-left: 40px;
+  }
+
+  .showcase-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .showcase-frame {
+    width: min(84vw, 560px);
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 720px) {
+  .showcase-track {
+    padding-left: 20px;
+    padding-right: 20px;
+    scroll-padding-left: 20px;
+  }
+}
+
+/* ===========================================================================
+   MERIDIA — corrections after the first render
+   The token swap carried almost everything, but a handful of rules had colours
+   written as literals against the old light theme. They are corrected here
+   rather than in place, so the origin of each change stays legible.
+   =========================================================================== */
+
+/* The header still had the old sand written into it and floated above a dark
+   page as a bright bar. */
+.nav {
+  background: rgba(12, 26, 43, 0.82);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Both hero chips assumed dark type on a light ground. On the plate they were
+   a vermilion slab and an unreadable dark-on-dark caption. */
+.hero-img-tag {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(231, 226, 214, 0.35);
+  backdrop-filter: blur(6px);
+}
+
+.hero-img-meta {
+  color: var(--ink);
+  background: rgba(7, 17, 29, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+/* EB Garamond sets wider than the face this scale was tuned for, so the
+   headline took a third line and pushed the readings under the fold. Measured,
+   not guessed: 5vw is the largest step that still holds "faces the winter sun."
+   on one line in the hero's seven-column text field. */
+.h-display {
+  font-size: clamp(38px, 5vw, 76px);
+}
+
+@media (max-width: 720px) {
+  .h-display {
+    font-size: clamp(38px, 10.5vw, 60px);
+  }
+}
+
+/* --- inverted-contrast corrections -----------------------------------------
+   Two surfaces kept `--offwhite` as their BACKGROUND. That token stayed light
+   through the rebrand (it is the text colour on dark bands), while `--ink`
+   flipped from near-black to chalk — so both ended up as light text on a light
+   ground. Measured on the note card: rgb(231,226,214) on rgb(242,238,228),
+   about 1.05:1. Unreadable, exactly as reported.
+   -------------------------------------------------------------------------- */
+
+.testi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line-2);
+}
+
+.testi-card:hover {
+  box-shadow: 8px 8px 0 var(--accent);
+  border-color: var(--ink);
+}
+
+/* Same failure, but only visible on hover, so it would have shipped. */
+.search-field:hover {
+  background: rgba(231, 226, 214, 0.06);
+}
+
+/* ===========================================================================
+   PREMIUM MOTION — the LUXONN set, rendered in Meridia's world
+   The reference prompt is an animation brief as much as a visual one. What it
+   asks for is built here; what it asks for in gold and glass is built in
+   prussian and engraved line instead.
+   =========================================================================== */
+
+/* --- header: transparent over the plate, grounded once you move ------------ */
+
+.nav {
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    background 520ms var(--ease),
+    border-color 520ms var(--ease),
+    backdrop-filter 520ms var(--ease);
+}
+
+.nav.is-scrolled {
+  background: rgba(12, 26, 43, 0.72);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+}
+
+/* --- reveals, retuned for a dark ground ------------------------------------
+   On the old sand ground an element arriving from opacity 0 separated itself
+   against the page. On the plate it does not: dark-on-dark has almost no
+   luminance step to travel. The entrance now carries a blur and a longer throw,
+   so the movement is legible on the material it actually lands on.
+   -------------------------------------------------------------------------- */
+
+/* The blur is applied by the tween in use-reveal.ts, not here: a CSS filter on
+   a [data-anim] selector would still match after the tween finished, and the
+   element would stay blurred for good. */
+
+/* --- the floating readings, over the plate --------------------------------- */
+
+.hero-readings {
+  position: absolute;
+  right: -28px;
+  bottom: 52px;
+  display: grid;
+  gap: 10px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+  .hero-readings {
+    display: none;
+  }
+}
+
+.reading-card {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 13px 18px;
+  background: rgba(7, 17, 29, 0.62);
+  border: 1px solid rgba(231, 226, 214, 0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  min-width: 196px;
+}
+
+.reading-card .v {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.reading-card .k {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-left: auto;
+}
+
+/* Words are the stagger unit in the headline, so each needs to be its own
+   inline block for the mask to clip it and for transforms to apply. */
+.hero-headline .hero-word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* The image column has to be a positioning context for the floating readings,
+   and must not clip them where they overhang its right edge. */
+.hero-grid > div:last-child {
+  position: relative;
 }

@@ -1,0 +1,51 @@
+{
+  "title": "Meridia — choose the visual world",
+  "question": "The roll assigned Southern Star Atlas. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Southern Star Atlas",
+      "kicker": "THE ROLL",
+      "lineage": "engraved celestial atlases and star catalogues",
+      "thesis": "A curated portfolio is a small catalogue of named objects. Each house is an entry with coordinates, a magnitude and a season — and going south is literally seeing a different sky. The surface is read at night, in winter, which is when this audience actually buys.",
+      "palette": ["#101A2E", "#1B2A4A", "#EDE7DA", "#C8873F"],
+      "materials": ["engraved line work", "prussian-blue chart ink", "catalogue numerals"],
+      "viewport": "A dark chart plane holding one property as a plotted entry: its coordinates, its latitude, the hours of winter sun it gets, and one full-bleed photograph revealed as you move through the plate.",
+      "risk": "A dark ground plus a warm accent is one keystroke away from the luxury-real-estate cliché. It has to read as an engraved chart, not as a glowing dark-mode UI.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-night-flight-six-pack-hero.webp"
+    },
+    {
+      "id": "challenger-nightflight",
+      "label": "Night Flight Instruments",
+      "lineage": "a small aircraft's night instrument six-pack",
+      "thesis": "Six calm dials that agree with each other, holding trust when there is nothing outside the glass.",
+      "case": "Fuses well: the buyer has never stood in the room, so every gauge is a thing they cannot verify themselves — sun hours, flight time, sea distance, winter temperature. The forensic second pass made into the whole interface.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-night-flight-six-pack-hero.webp"
+    },
+    {
+      "id": "challenger-brick",
+      "label": "Brick Build Instructions",
+      "lineage": "numbered exploded steps on sky-blue pages",
+      "thesis": "Wordless arrows and 1:1 call-outs teaching assembly, step by numbered step.",
+      "case": "Fuses only halfway: buying abroad genuinely is a numbered sequence of steps, and this world teaches sequence better than any other. But it renders houses as parts in a kit, which works against a purchase this audience makes emotionally.",
+      "hero": "https://impeccable.style/worlds/cards/games-toys-physics-play-brick-build-instructions-hero.webp"
+    },
+    {
+      "id": "challenger-scher",
+      "label": "Street Typography",
+      "lineage": "public theater street posters, wood-type capitals",
+      "thesis": "Architectural-scale wood type on diagonals, words cropped by the edge like crowd noise.",
+      "case": "Fuses poorly: it shouts, and this decision is made quietly over three months. It would also bury the photographs, which are the only real evidence this product has.",
+      "hero": "https://impeccable.style/worlds/cards/brand-identity-canon-scher-street-typography-hero.webp"
+    }
+  ],
+  "reroll": true,
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "What luxury holiday-home sites ship, executed impeccably: a full-bleed pool at golden hour, a restrained serif, a filter bar, generous white space.",
+    "viewport": "The arrangement a visitor expects, at full craft.",
+    "risk": "Indistinguishable from every competitor, by design."
+  },
+  "steer": true
+}

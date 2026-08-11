@@ -3,18 +3,22 @@ export interface FilterOption {
   labelKey: string;
 }
 
+/* `labelKey` is passed through `t()`, so a literal here renders as itself and a
+   real key resolves — see the chips in listings-section.tsx. Place names stay
+   literal; only "all" needs translating. */
+
 export const REGIONS: FilterOption[] = [
   { id: "alla", labelKey: "listings.filter.all" },
-  { id: "stockholm", labelKey: "Stockholm" },
-  { id: "skargard", labelKey: "Skärgården" },
-  { id: "vastra", labelKey: "Västkusten" },
-  { id: "skane", labelKey: "Skåne" },
+  { id: "caribbean", labelKey: "Caribbean" },
+  { id: "mediterranean", labelKey: "Mediterranean" },
+  { id: "atlantic", labelKey: "Atlantic" },
+  { id: "indian", labelKey: "Mountain" },
 ];
 
 export const TYPES: FilterOption[] = [
   { id: "alla", labelKey: "listings.filter.all" },
-  { id: "villa", labelKey: "Villa" },
-  { id: "lagenhet", labelKey: "Lägenhet" },
-  { id: "radhus", labelKey: "Radhus" },
-  { id: "gard", labelKey: "Gård" },
+  { id: "villa", labelKey: "House" },
+  { id: "lagenhet", labelKey: "Apartment" },
+  { id: "radhus", labelKey: "Pavilion" },
+  { id: "gard", labelKey: "Estate" },
 ];

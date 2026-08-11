@@ -39,6 +39,13 @@ export function Icon({
       </>
     ),
     chevDown: <path d="m6 9 6 6 6-6" />,
+    menu: (
+      <>
+        <path d="M4 7h16" />
+        <path d="M4 12h16" />
+        <path d="M4 17h16" />
+      </>
+    ),
     close: (
       <>
         <path d="M18 6 6 18" />
