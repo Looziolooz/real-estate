@@ -12,7 +12,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-col">
             <div className="logo" style={{ marginBottom: 18 }}>
-              Nordhem<span className="dot"></span>
+              Meridia<span className="dot"></span>
             </div>
             <p
               className="body-serif"

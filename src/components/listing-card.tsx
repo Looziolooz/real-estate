@@ -9,6 +9,7 @@ export default function ListingCard({
   span,
   tall,
   liked,
+  morphing,
   onLike,
   onOpen,
 }: {
@@ -16,6 +17,9 @@ export default function ListingCard({
   span: string;
   tall: boolean;
   liked: boolean;
+  /** True while this listing owns the open drawer, so the card yields its
+   *  flip id to the drawer's image for the duration. */
+  morphing: boolean;
   onLike: () => void;
   onOpen: () => void;
 }) {
@@ -23,12 +27,20 @@ export default function ListingCard({
 
   return (
     <article
+      data-anim="fade-up"
       className={`listing ${span} ${tall ? "tall" : ""}`}
       onClick={onOpen}
       style={{ cursor: "pointer" }}
     >
       <div className="listing-img">
-        <img src={listing.img} alt={listing.title} />
+        {/* Flip target. Rendered only while this listing is *not* the open one,
+            so exactly one element in the document ever carries a given
+            data-flip-id — the invariant the morph depends on. */}
+        {!morphing && (
+          <div className="flip-frame" data-flip-id={listing.id}>
+            <img src={listing.img} alt={listing.title} />
+          </div>
+        )}
         {listing.badge && (
           <span
             className={`listing-badge ${listing.badge === "Ny" ? "new" : ""}`}

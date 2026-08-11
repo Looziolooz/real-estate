@@ -11,13 +11,13 @@ interface LangCtx {
 }
 
 const LangContext = createContext<LangCtx>({
-  lang: "sv",
+  lang: "en",
   setLang: () => {},
   t: (key: string) => key,
 });
 
 export function LangProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Lang>("sv");
+  const [lang, setLang] = useState<Lang>("en");
 
   const t = useCallback(
     (key: string): string => translations[lang]?.[key] ?? key,
